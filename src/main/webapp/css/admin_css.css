@@ -1,0 +1,81 @@
+.navbar {
+    margin-bottom: 0;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+}
+
+.navbar-brand {
+    background: url(../imagini/newlogo.png);
+    width: 200px
+}
+
+.navbar-default .navbar-nav li a {
+    color: #0077b3;
+    font-family: 'Chewy';
+    font-size: 15px;
+}
+
+.navbar-nav li a:hover {
+    color: #004466 !important;
+    background-color: #fff !important;
+}
+
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+    color: #004466 !important;
+    background: #fff !important;
+}
+
+.navbar-default {
+    background-image: linear-gradient(to bottom,whitesmoke 0,whitesmoke 10%);
+}
+
+.custom_tabs {
+    margin-top: 100px;
+    font-family: 'Chewy';
+    font-size: 15px;
+}
+
+.custom_tabs .active a,
+.custom_tabs .active a:hover {
+    color: #004466 !important;
+    background: whitesmoke !important;
+}
+
+a {
+    color: #0077b3;
+}
+
+.jobs_form_background {
+  background: whitesmoke; 
+  padding: 20px;
+  max-width: 1200px;
+  border-radius: 0px 0px 10px 10px;
+  border: 1px solid #ddd;
+  border-top-color: transparent;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+body, html {
+  margin: 0;
+  height:80%;
+}
+
+.container-fluid, .parent{
+  height: 85%;
+}
+
+#createJobGrid {
+  height:100%;
+  overflow-y: auto;
+}
+
+.jobs_label {
+    color: #004466 !important;
+}
+

@@ -1,0 +1,30 @@
+<html ng-app="webRecruiterApp">
+    <head>
+        <title>Web Recruiter</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--BootStrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <!-- Angular -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+        <!--Google Fonts-->
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Chewy'>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+        <!--Custom files-->
+        <link rel="stylesheet" href="css/login_register_styles.css">
+        <link rel="stylesheet" href="css/register_styles.css">
+        <link rel="stylesheet" href="css/admin_css.css">
+        <!--Custom js files-->
+        <script src="js/webRecruiterApp.js"></script>
+        <script defer src="directives/webRecruiterApp_directives.js"></script>
+        <script defer src="services/webRecruiterApp_services.js"></script>
+        <!--<base href="/WebRecruiter/">-->
+    </head>
+    <body style = "background: url(imagini/company.png) no-repeat center center fixed; background-size: cover">
+        <div ui-view></div>
+    </body>
+</html>

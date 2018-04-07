@@ -1,0 +1,9 @@
+.register_form_background {
+  background: whitesmoke; 
+  padding: 20px;
+  max-width: 400px;
+  margin: 110px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+

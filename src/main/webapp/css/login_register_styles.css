@@ -1,0 +1,96 @@
+.form_background {
+  background: whitesmoke; 
+  padding: 20px;
+  max-width: 400px;
+  margin: 170px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.logo {
+    display:block;
+    margin:auto;
+}
+
+.custom_button {
+    display:block;
+    margin:auto;
+    margin-bottom: 5px;
+    border: 0;
+    outline: none;
+    font-family: 'Chewy';
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 6px;
+    color: white;
+    background-color: #2874A6;
+    cursor: pointer;
+}
+
+.custom_button:focus, .custom_button:active{
+    outline: 1px dotted #000;/* for browsers that do not understand the -webkit… expression*/
+    outline: -webkit-focus-ring-color auto 5px;/*little trick for obtaining default outline looks on Chrome, Opera and Safari*/
+    background: #1B4F72;
+}
+
+.custom_button:hover {
+  background: #1B4F72;
+}
+
+.custom_button[disabled] {
+    display:block;
+    margin:auto;
+    margin-bottom: 5px;
+    border: 0;
+    outline: none;
+    font-family: 'Chewy';
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 6px;
+    color: white;
+    background-color: #616A6B;
+    cursor: not-allowed;
+}
+
+.bottom_space {
+    margin-bottom: 5px;
+}
+
+.label_position {
+    margin-right: 3px;
+}
+
+.error_label_position { 
+    text-align: center;
+    color: red;
+    font-family: 'Chewy';
+    font-size: 15px;
+}
+
+.style_links {
+    text-align: center;
+    font-family: 'Chewy';
+}
+
+.label_style {
+    font-family: 'Chewy';
+    font-size: 15px;
+}
+
+.fa-exclamation-triangle {
+    color: red
+}
+
+.tooltipClass + .tooltip > .tooltip-inner {
+    background-color: rgba(255, 0, 0, 1);
+    opacity: 100;
+    font-family: 'Chewy';
+    color: white;
+    border: 1px solid red; 
+    padding: 4px;
+    font-size: 13px;
+}
+  
+.tooltipClass + .tooltip.left > .tooltip-arrow {
+    border-left: 5px solid red;
+}
