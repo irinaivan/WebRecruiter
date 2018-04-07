@@ -3,6 +3,7 @@ var webRecruiterApp = angular.module("webRecruiterApp", ['ui.router']);
 //configurarea rutelor
 webRecruiterApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.when('/admin', '/admin/jobs');
     $urlRouterProvider.when('/admin/jobs', '/admin/jobs/create');
     $stateProvider 
             .state("home", {
@@ -22,27 +23,27 @@ webRecruiterApp.config(function($stateProvider, $urlRouterProvider) {
             })
             .state("candidate", {
                 url: "/candidate",
-                templateUrl: "view/candidate.html",
-                resolve: {
+                templateUrl: "view/candidate.html"
+                /*resolve: {
                     security: ['$q', '$window', function($q, $window){
                             if($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
                                     $window.sessionStorage["authenticatedUserRole"] === "admin"){
                                return $q.reject("Not Authorized");
                             }
                         }]
-                }
+                }*/
             })
             .state("admin", {
                 url: "/admin",
-                templateUrl: "view/admin.html",
-                resolve: {
+                templateUrl: "view/admin.html"
+                /*resolve: {
                     security: ['$q','$window', function($q, $window){
                             if($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
                                     $window.sessionStorage["authenticatedUserRole"] === 'candidate'){
                                return $q.reject("Not Authorized");
                             }
                         }]
-                }
+                }*/
             })
             .state("admin.candidates", {
                url: "/candidates",

@@ -66,16 +66,22 @@ body, html {
   height:80%;
 }
 
-.container-fluid, .parent{
+.container_with_scrollBar, .parent{
   height: 85%;
 }
 
 #createJobGrid {
   height:100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .jobs_label {
     color: #004466 !important;
+}
+
+.checkbox, .radio {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 
