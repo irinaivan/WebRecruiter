@@ -1,141 +1,15 @@
 <div class="jobs_form_background">
-    <div class="container-fluid container_with_scrollBar">
-        <form name="createJobForm" autocomplete="off" novalidate>
-            <div class="row" id="createJobGrid">
-                <div class="form-group">
-                    <label class="label_style jobs_label">Nume job:</label>
-                    <input class="form-control bottom_space" name="jobName" ng-model="jobName" id="jobName" required>
+    <div class="container-fluid container_with_scrollBarv1">
+        <div class="row" id="createJobGrid">
+            <form name="createJobForm" autocomplete="off" novalidate>
+                <div ui-view="createJob">
                 </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Proiect:</label>
-                    <input class="form-control bottom_space" name="jobProject" ng-model="jobProject" id="jobProject" required>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Descriere:</label>
-                    <textarea rows="5" class="form-control bottom_space" name="jobDescription" ng-model="jobDescription" id="jobDescription" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Cunostinte necesare:</label>
-                    <textarea rows="3" class="form-control bottom_space" name="jobRequirements" ng-model="jobRequirements" id="jobRequirements" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Intrebarea 1:</label>
-                    <textarea rows="3" class="form-control bottom_space" name="question1" ng-model="question1" id="question1" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Variante de raspuns:</label>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response1Q1" ng-model="response1Q1" id="response1Q1" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q1" ng-model="response2Q1" id="response2Q1" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q1" ng-model="response3Q1" id="response3Q1" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Raspuns corect:</label>
-                    <input class="form-control bottom_space" name="correctResponseQ1" ng-model="correctResponseQ1" id="correctResponseQ1" required>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Intrebarea 2:</label>
-                    <textarea rows="3" class="form-control bottom_space" name="question2" ng-model="question2" id="question2" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Variante de raspuns:</label>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response1Q2" ng-model="response1Q2" id="response1Q2" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q2" ng-model="response2Q2" id="response2Q2" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q2" ng-model="response3Q2" id="response3Q2" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Raspuns corect:</label>
-                    <input class="form-control bottom_space" name="correctResponseQ2" ng-model="correctResponseQ2" id="correctResponseQ2" required>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Intrebarea 3:</label>
-                    <textarea rows="3" class="form-control bottom_space" name="question3" ng-model="question3" id="question3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Variante de raspuns:</label>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response1Q3" ng-model="response1Q3" id="response1Q3" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q3" ng-model="response2Q3" id="response2Q3" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q3" ng-model="response3Q3" id="response3Q3" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Raspuns corect:</label>
-                    <input class="form-control bottom_space" name="correctResponseQ3" ng-model="correctResponseQ3" id="correctResponseQ3" required>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Intrebarea 4:</label>
-                    <textarea rows="3" class="form-control bottom_space" name="question1" ng-model="question4" id="question4" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Variante de raspuns:</label>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response1Q4" ng-model="response1Q4" id="response1Q4" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q4" ng-model="response2Q4" id="response2Q4" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q4" ng-model="response3Q4" id="response3Q4" required>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Raspuns corect:</label>
-                    <input class="form-control bottom_space" name="correctResponseQ4" ng-model="correctResponseQ4" id="correctResponseQ4" required>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Intrebarea 5:</label>
-                    <textarea rows="3" class="form-control bottom_space" name="question1" ng-model="question5" id="question5" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Variante de raspuns:</label>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response1Q5" ng-model="response1Q5" id="response1Q5" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q5" ng-model="response2Q5" id="response2Q5" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control bottom_space" name="response2Q5" ng-model="response3Q5" id="response3Q5" required>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="label_style jobs_label">Raspuns corect:</label>
-                    <input class="form-control bottom_space" name="correctResponseQ5" ng-model="correctResponseQ5" id="correctResponseQ5" required>
-                </div>
-                <button class="custom_button" ng-disabled="createJobForm.$invalid" ng-click="">Creare</button>
-                </row>
-                <div class="error_label_position">
-                    <label id="errorLabel_createJob"></label>
-                </div>
-        </form>
+            </form>
+            <button class="custom_button" ng-disabled="createJobForm.$invalid" ng-click="">Creare</button>
+            <div class="error_label_position">
+                <label id="errorLabel_createJob"></label>
+            </div>
+        </div>
     </div>
 </div>
 

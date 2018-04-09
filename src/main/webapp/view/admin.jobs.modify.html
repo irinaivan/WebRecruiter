@@ -1,6 +1,6 @@
-<div class="jobs_form_background">
+<div class="jobs_form_background" ng-controller="modifyOrDeleteController">
     <div class="container-fluid">
-        <div class="row" id="modifyJobGrid">
+        <div class="row">
             <form name="chooseAction">
                 <div class="form-group">
                     <label class="label_style jobs_label">Lista job-uri adaugate:</label>
@@ -12,16 +12,18 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="row radio">
-                        <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-4 text-left">
                             <label class="label_style jobs_label">Alegeti operatia dorita:</label>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="col-sm-4 radio">
-                                <label class="label_style"><input type="radio" name="actionOption">Modificare</label>
-                            </div>
-                            <div class="col-sm-4 radio">
-                                <label class="label_style"><input type="radio" name="actionOption">Stergere</label>
+                        <div class="radio" ng-click="toggleFormDeleteBtn()">
+                            <div class="col-sm-8">
+                                <div class="col-sm-4 radio">
+                                    <label class="label_style"><input type="radio" name="actionOption" value="modify" ng-model="modifyDeleteJob">Modificare</label>
+                                </div>
+                                <div class="col-sm-4 radio">
+                                    <label class="label_style"><input type="radio" name="actionOption" value="delete" ng-model="modifyDeleteJob">Stergere</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -31,7 +33,19 @@
                 <div class="form-group">
                 </div>
             </form>
-            <button class="custom_button" ng-show="false" ng-click="">Sterge job</button>
+            <button class="custom_button" ng-show="checkDeleteBtnVisibility()" ng-click="">Sterge job</button>
         </div>
+    </div>
+    <div id = "modifyFormContainer"  class="container-fluid container_with_scrollBarv2" ng-show="checkModifyFormVisibility()">
+        <div class="row" id="modifyJobGrid">
+            <form name="modifyJobForm" autocomplete="off" novalidate>
+                <div ui-view="modifyJob">
+                </div>
+            </form>
+            <button class="custom_button" ng-disabled="modifyJobForm.$invalid" ng-click="">Modificare</button>
+        </div>
+    </div>
+    <div class="error_label_position">
+        <label id="errorLabel_modifyJob"></label>
     </div>
 </div>

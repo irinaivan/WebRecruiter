@@ -19,12 +19,14 @@
         <link rel="stylesheet" href="css/register_styles.css">
         <link rel="stylesheet" href="css/admin_css.css">
         <!--Custom js files-->
-        <script src="js/webRecruiterApp.js"></script>
+        <script src="js/webRecruiterApp_config.js"></script>
+        <script src="js/webRecruiterApp_loginModule.js"></script>
+        <script src="js/webRecruiterApp_adminModule.js"></script>
         <script defer src="directives/webRecruiterApp_directives.js"></script>
         <script defer src="services/webRecruiterApp_services.js"></script>
         <!--<base href="/WebRecruiter/">-->
     </head>
     <body style = "background: url(imagini/company.png) no-repeat center center fixed; background-size: cover">
-        <div ui-view></div>
+        <div ui-view=""></div>
     </body>
 </html>

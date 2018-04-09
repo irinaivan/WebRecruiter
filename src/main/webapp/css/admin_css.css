@@ -66,11 +66,15 @@ body, html {
   height:80%;
 }
 
-.container_with_scrollBar, .parent{
+.container_with_scrollBarv1, .parent{
   height: 85%;
 }
 
-#createJobGrid {
+.container_with_scrollBarv2, .parent{
+  height: 65%;
+}
+
+#createJobGrid, #modifyJobGrid {
   height:100%;
   overflow-y: auto;
   overflow-x: hidden;
