@@ -23,7 +23,7 @@ webRecruiterApp.directive('tooltipoverflow', function () {
                 }
             }, function (scope, element, attrs) {
                 // on mouseleave
-                //$(element).tooltip('hide');
+                $(element).tooltip('hide');
             });
         }
     };
