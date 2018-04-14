@@ -83,7 +83,7 @@
 
 .tooltipClass + .tooltip > .tooltip-inner {
     background-color: rgba(255, 0, 0, 1);
-    opacity: 100;
+    opacity: 1;
     font-family: 'Chewy';
     color: white;
     border: 1px solid red; 

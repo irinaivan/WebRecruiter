@@ -3,8 +3,7 @@ var webRecruiterApp = angular.module("webRecruiterApp", ['ui.router']);
 //configurarea rutelor
 webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
-    $urlRouterProvider.when('/admin', '/admin/jobs');
-    $urlRouterProvider.when('/admin/jobs', '/admin/jobs/create');
+    $urlRouterProvider.when('/admin/jobs', '/admin/jobs/listOfJobs');
     $stateProvider
             .state("home", {
                 url: '/login',
@@ -53,11 +52,15 @@ webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
                 url: "/jobs",
                 templateUrl: "view/admin.jobs.html"
             })
+            .state("admin.jobs.listOfJobs", {
+                url: "/listOfJobs",
+                templateUrl: "view/admin.jobs.listOfJobs.html"
+            })
             .state("admin.jobs.create", {
                 url: "/create",
                 views: {
                     "": {
-                        templateUrl: "view/admin.jobs.create.html",
+                        templateUrl: "view/admin.jobs.create.html"
                     },
                     "createJob@admin.jobs.create": {
                         templateUrl: 'view/admin.jobs.createOrModify.html'
@@ -83,6 +86,11 @@ webRecruiterApp.run(function ($transitions, $state) {
     $transitions.onError({}, function ($transition$) {
         if ($transition$.$from().name !== 'home' && $transition$.error().detail === "Not Authorized") {
             $state.transitionTo('home');
+        }
+    });
+    $transitions.onStart({}, function ($transition$) {
+        if ($transition$.$to().name === 'admin') {
+            $state.transitionTo('admin.jobs.listOfJobs');
         }
     });
 });

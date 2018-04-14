@@ -52,32 +52,32 @@ a {
 }
 
 .jobs_form_background {
-  background: whitesmoke; 
-  padding: 20px;
-  max-width: 1200px;
-  border-radius: 0px 0px 10px 10px;
-  border: 1px solid #ddd;
-  border-top-color: transparent;
-  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+    background: whitesmoke; 
+    padding: 20px;
+    max-width: 1200px;
+    border-radius: 0px 0px 10px 10px;
+    border: 1px solid #ddd;
+    border-top-color: transparent;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
 }
 
 body, html {
-  margin: 0;
-  height:80%;
+    margin: 0;
+    height:80%;
 }
 
 .container_with_scrollBarv1, .parent{
-  height: 85%;
+    height: 85%;
 }
 
 .container_with_scrollBarv2, .parent{
-  height: 65%;
+    height: 65%;
 }
 
 #createJobGrid, #modifyJobGrid {
-  height:100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+    height:100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .jobs_label {
@@ -87,5 +87,47 @@ body, html {
 .checkbox, .radio {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
+}
+
+.table td.text {
+    max-width: 177px;
+}
+.table td.text span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}
+
+.wrapTextTooltip + .tooltip > .tooltip-inner {
+    background-color: #004466;
+    max-width: 285px;
+    opacity: 1;
+    color: #FFFFFF; 
+    padding: 5px;
+    font-size: 13px;
+    font-family: 'Chewy';
+    overflow-wrap: break-word;
+}
+
+.wrapTextTooltip + .tooltip.right .tooltip-arrow {
+    top: 50%;
+    left: 0;  
+    margin-top: -5px;  
+    border-width: 5px 5px 5px 0;  
+    border-right-color: #004466;
+}
+
+th {
+    font-family: 'Chewy';
+    font-size: 15px;
+    color: #004466;
+    text-align: center;
+}
+
+td {
+    font-size: 14px;
+    text-align: center;
 }
 
