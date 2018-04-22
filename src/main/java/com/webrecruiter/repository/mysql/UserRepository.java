@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webrecruiter.repository;
+package com.webrecruiter.repository.mysql;
 
-import com.webrecruiter.model.User;
+import com.webrecruiter.model.mysql.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

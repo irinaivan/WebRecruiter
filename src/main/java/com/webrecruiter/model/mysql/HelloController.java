@@ -1,4 +1,4 @@
-package com.webrecruiter.model;
+package com.webrecruiter.model.mysql;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

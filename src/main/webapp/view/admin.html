@@ -1,5 +1,5 @@
 <div>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top" ng-controller="adminNavBarController">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#adminNavbar">
@@ -12,6 +12,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li ui-sref-active="active"><a ui-sref="admin.candidates">Candidati</a></li>
             <li ui-sref-active="active"><a ui-sref="admin.jobs">Job-uri</a></li>
+            <li ui-sref-active="active"><a ui-sref="home" ng-click="logout()">Iesire</a></li>
           </ul>
         </div>
       </div>

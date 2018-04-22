@@ -6,7 +6,7 @@ webRecruiterApp.service('httpLoginRequestsService', function($http) {
     };
 });
 
-webRecruiterApp.service('tokenRequestService', function($http, $window) {
+webRecruiterApp.service('tokenRequestsService', function($http, $window) {
     return {
         postRequest: function(url, data) {
             $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage["token"];

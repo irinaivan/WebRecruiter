@@ -1,6 +1,6 @@
 package com.webrecruiter.jwtsecurity;
 
-import com.webrecruiter.model.User;
+import com.webrecruiter.model.mysql.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;

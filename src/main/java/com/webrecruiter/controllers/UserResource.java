@@ -6,7 +6,7 @@
 package com.webrecruiter.controllers;
 
 import com.webrecruiter.jwtsecurity.JwtGenerator;
-import com.webrecruiter.model.User;
+import com.webrecruiter.model.mysql.User;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.webrecruiter.repository.UserRepository;
+import com.webrecruiter.repository.mysql.UserRepository;
 import com.webrecruiter.utils.UserRole;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,7 +1,7 @@
 package com.webrecruiter.jwtsecurity;
 
-import com.webrecruiter.model.User;
-import com.webrecruiter.repository.UserRepository;
+import com.webrecruiter.model.mysql.User;
+import com.webrecruiter.repository.mysql.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

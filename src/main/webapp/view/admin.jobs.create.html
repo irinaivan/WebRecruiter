@@ -1,11 +1,11 @@
 <div class="jobs_form_background">
     <div class="container-fluid container_with_scrollBarv1">
-        <div class="row" id="createJobGrid">
+        <div class="row" id="createJobGrid" ng-controller="createJobController">
             <form name="createJobForm" autocomplete="off" novalidate>
                 <div ui-view="createJob">
                 </div>
             </form>
-            <button class="custom_button" ng-disabled="createJobForm.$invalid" ng-click="">Creare</button>
+            <button class="custom_button" ng-disabled="createJobForm.$invalid" ng-click="createJob()">Creare</button>
             <div class="error_label_position">
                 <label id="errorLabel_createJob"></label>
             </div>

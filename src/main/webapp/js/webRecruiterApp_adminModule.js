@@ -1,6 +1,30 @@
 var modifyFormVisibility = false;
 var deleteButtonVisibility = false;
-webRecruiterApp.controller("modifyOrDeleteController", function ($scope, $state) {
+
+webRecruiterApp.controller("adminNavBarController", function ($scope, $window) {
+    $scope.logout = function () {
+        $window.sessionStorage.clear();
+    };
+});
+
+webRecruiterApp.controller("createJobController", function (tokenRequestsService, $scope) {
+    $scope.createJob = function () {
+        var jobData = $scope.createJobForm.jobName.$$scope.jobData;
+        var jobDataToJson = angular.toJson(jobData);
+        var url = "adminModule/createJob";
+        tokenRequestsService.postRequest(url, jobDataToJson).then(
+            function (response) {
+                console.log("OK");
+            },
+            function (error) {
+                console.log("Error");
+            }
+        );
+        console.log("Job data");
+    };
+});
+
+webRecruiterApp.controller("modifyOrDeleteJobController", function ($scope) {
     $scope.checkModifyFormVisibility = function () {
         if ($scope.modifyDeleteJob === undefined) {
             return false;

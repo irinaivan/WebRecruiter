@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webrecruiter.model;
+package com.webrecruiter.model.mysql;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
