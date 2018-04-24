@@ -7,7 +7,6 @@ package com.webrecruiter.controllers;
 
 import com.webrecruiter.model.mongo.Job;
 import com.webrecruiter.model.mongo.Question;
-import com.webrecruiter.model.mysql.User;
 import com.webrecruiter.repository.mongo.JobsRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +45,8 @@ public class AdminResource {
         jobToCreate.setQuestions(jobQuestions);
         jobsRepository.insert(jobToCreate);
         List<Job> allJobs = jobsRepository.findAll();
-        List<Job> job = jobsRepository.findByJobNameAndJobProject("Java Developer","Avaya");
+        List<Job> job = jobsRepository.findByJobNameAndJobProject(jobToCreate.getJobName(),jobToCreate.getJobDescription());
+        
         responseBody.put("OK", "OK");
         return responseBody;
     }

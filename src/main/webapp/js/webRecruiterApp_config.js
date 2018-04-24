@@ -72,7 +72,7 @@ webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
                 url: "/modify",
                 views: {
                     "": {
-                        templateUrl: "view/admin.jobs.modify.html",
+                        templateUrl: "view/admin.jobs.modify.html"
                     },
                     "modifyJob@admin.jobs.modify": {
                         templateUrl: 'view/admin.jobs.createOrModify.html'

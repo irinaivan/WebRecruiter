@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Id;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author irina
  */
 @Document(collection="jobs")
+@CompoundIndex(def = "{'jobName':1, 'jobProject':1}", name = "index")
 public class Job {
     @Id
     private ObjectId id;

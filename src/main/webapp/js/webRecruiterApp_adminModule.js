@@ -20,7 +20,10 @@ webRecruiterApp.controller("createJobController", function (tokenRequestsService
                 console.log("Error");
             }
         );
-        console.log("Job data");
+        //refresh form
+        $scope.createJobForm.jobName.$$scope.jobData = {};
+        $scope.createJobForm.$setPristine();
+        $scope.createJobForm.$setUntouched();
     };
 });
 
