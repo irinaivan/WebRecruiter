@@ -7,23 +7,23 @@ webRecruiterApp.controller("adminNavBarController", function ($scope, $window) {
     };
 });
 
-webRecruiterApp.controller("createJobController", function (tokenRequestsService, $scope) {
+webRecruiterApp.controller("createJobController", function (tokenRequestsService, $scope, $state) {
     $scope.createJob = function () {
         var jobData = $scope.createJobForm.jobName.$$scope.jobData;
         var jobDataToJson = angular.toJson(jobData);
         var url = "adminModule/createJob";
         tokenRequestsService.postRequest(url, jobDataToJson).then(
-            function (response) {
-                console.log("OK");
-            },
-            function (error) {
-                console.log("Error");
-            }
+                function (response) {
+                    document.getElementById("errorLabel_createJob").innerHTML = '';
+                    //refresh form
+                    $scope.createJobForm.jobName.$$scope.jobData = {};
+                    $scope.createJobForm.$setPristine();
+                    $scope.createJobForm.$setUntouched();
+                },
+                function (error) {
+                    document.getElementById("errorLabel_createJob").innerHTML = '<i class="fa fa-exclamation-triangle"></i>' + error.data.message;
+                }
         );
-        //refresh form
-        $scope.createJobForm.jobName.$$scope.jobData = {};
-        $scope.createJobForm.$setPristine();
-        $scope.createJobForm.$setUntouched();
     };
 });
 

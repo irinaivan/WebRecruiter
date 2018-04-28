@@ -16,5 +16,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author irina
  */
 public interface JobsRepository extends MongoRepository<Job, ObjectId> {
-    List<Job> findByJobNameAndJobProject(String jobName, String jobProject);
+    Job findOneByJobNameAndJobProject(String jobName, String jobProject);
 }
