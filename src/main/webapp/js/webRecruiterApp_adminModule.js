@@ -53,4 +53,15 @@ webRecruiterApp.controller("modifyOrDeleteJobController", function ($scope) {
     };
 });
 
-
+webRecruiterApp.controller("listOfJobsController", function (tokenRequestsService, $scope) {
+    var url = "adminModule/listOfJobs";
+    tokenRequestsService.getRequest(url).then(
+            function (response) {
+                $scope.jobs = response.data;
+            },
+            function (error) {
+                //empty table
+                $scope.jobs = [];
+            }
+    );
+});

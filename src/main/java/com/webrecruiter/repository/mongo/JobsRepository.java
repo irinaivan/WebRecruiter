@@ -6,15 +6,16 @@
 package com.webrecruiter.repository.mongo;
 
 import com.webrecruiter.model.mongo.Job;
-import java.util.List;
 import org.bson.types.ObjectId;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import com.webrecruiter.utils.JobsRepositoryCustom;
 
 /**
  *
  * @author irina
  */
-public interface JobsRepository extends MongoRepository<Job, ObjectId> {
+public interface JobsRepository extends MongoRepository<Job, ObjectId>, JobsRepositoryCustom {
+    
     Job findOneByJobNameAndJobProject(String jobName, String jobProject);
+    
 }

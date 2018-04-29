@@ -5,6 +5,7 @@
  */
 package com.webrecruiter.model.mongo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Id;
 import org.bson.types.ObjectId;
@@ -17,6 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="jobs")
 public class Job {
     @Id
+    @JsonIgnore
     private ObjectId id;
     
     private String jobName;
@@ -38,10 +40,12 @@ public class Job {
         this.jobRequirements = jobRequirements;
     }
     
-    
+    @JsonIgnore
     public String getId() {
         return id.toString();
     }
+    
+    @JsonIgnore
     public void setId(String id) {
         this.id = new ObjectId(id);
     }

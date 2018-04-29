@@ -1,6 +1,6 @@
 <div class="jobs_form_background">
-    <div class="container-fluid">
-        <div class="table-responsive">          
+    <div class="container-fluid container_with_scrollBarv1">
+        <div class="table-responsive" ng-controller="listOfJobsController">          
             <table class="table">
                 <thead>
                     <tr>
@@ -12,26 +12,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text"><span>1</span></td>
-                        <td class="text"><span>JavaScript Developper</span></td>
-                        <td class="text"><span>IndigoPro</span></td>
-                        <td class="text"><span class="wrapTextTooltip" data-original-title="aaaaaaaaavvvvvvvvvvvvvvvvvvvvvvvvv&#013;kkajja" data-toggle="tooltip" data-placement="right" tooltipoverflow>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<span></td>
-                        <td class="text"><span>ExtJs, Java</span></td>
-                    </tr>
-                    <tr>
-                        <td class="text"><span>2</span></td>
-                        <td class="text"><span>Java Developper</span></td>
-                        <td class="text"><span>Avaya</span></td>
-                        <td class="text"><span class="wrapTextTooltip" data-original-title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" data-toggle="tooltip" data-placement="right" tooltipoverflow>aaaaaaaaaaaaaaaa<span></td>
-                        <td class="text"><span>ExtJs, Java</span></td>
-                    </tr>
-                    <tr>
-                        <td class="text"><span>3</span></td>
-                        <td class="text"><span>C++ Developper</span></td>
-                        <td class="text"><span>EXtreme</span></td>
-                        <td class="text"><span class="wrapTextTooltip" data-original-title="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!" data-toggle="tooltip" data-placement="right" tooltipoverflow>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<span></td>
-                        <td class="text"><span>C++</span></td>
+                    <tr ng-repeat="job in jobs">
+                        <td class="text"><span>{{$index}}</span></td>
+                        <td class="text"><span>{{job.jobName}}</span></td>
+                        <td class="text"><span>{{job.jobProject}}</span></td>
+                        <td class="text"><span class="wrapTextTooltip" data-original-title={{job.jobDescription}} data-toggle="tooltip" data-placement="right" tooltipoverflow>{{job.jobDescription}}<span></td>
+                        <td class="text"><span>{{job.jobRequirements}}</span></td>
                     </tr>
                 </tbody>
             </table>
