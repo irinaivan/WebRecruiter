@@ -27,7 +27,26 @@ webRecruiterApp.controller("createJobController", function (tokenRequestsService
     };
 });
 
-webRecruiterApp.controller("modifyOrDeleteJobController", function ($scope) {
+webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequestsService, $scope, $state) {
+    var jobsComboInfoUrl = "adminModule/jobsForCombo";
+    tokenRequestsService.getRequest(jobsComboInfoUrl).then(
+            function (response) {
+                $scope.jobList = response.data;
+            },
+            function (error) {
+                //empty combo
+                $scope.jobList = [];
+            }
+    );
+
+    $scope.checkSelectedJob = function () {
+        if ($scope.selectedJob === undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     $scope.checkModifyFormVisibility = function () {
         if ($scope.modifyDeleteJob === undefined) {
             return false;
@@ -50,6 +69,22 @@ webRecruiterApp.controller("modifyOrDeleteJobController", function ($scope) {
             deleteButtonVisibility = true;
             modifyFormVisibility = false;
         }
+    };
+    $scope.deleteJob = function () {
+        var deleteJobUrl = "adminModule/deleteJob";
+        var jobToDeleteData = {
+            "jobInfo": $scope.selectedJob.jobInfo
+        };
+        var jobToDeleteDataJson = angular.toJson(jobToDeleteData);
+        tokenRequestsService.postRequest(deleteJobUrl, jobToDeleteDataJson).then(
+                function (response) {
+                   document.getElementById("errorLabel_modifyJob").innerHTML = '';
+                   $state.reload();
+                },
+                function (error) {
+                    document.getElementById("errorLabel_modifyJob").innerHTML = '<i class="fa fa-exclamation-triangle"></i>' + error.data.message;
+                }
+        );
     };
 });
 

@@ -34,4 +34,15 @@ public class JobsRepositoryImpl implements JobsRepositoryCustom {
         jobs = mongoTemplate.find(query, Job.class);
         return jobs;
     }
+
+    @Override
+    public List<Job> getListOfJobsForCombo() {
+        List<Job> jobs = new ArrayList<Job>();
+        Query query = new Query();
+        query.fields().include("jobName");
+        query.fields().include("jobProject");
+        query.fields().exclude("id");
+        jobs = mongoTemplate.find(query, Job.class);
+        return jobs;
+    }
 }

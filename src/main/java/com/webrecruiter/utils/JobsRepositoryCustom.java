@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface JobsRepositoryCustom {
     public List<Job> getListOfJobsPartialData();
+    
+    public List<Job> getListOfJobsForCombo();
 }

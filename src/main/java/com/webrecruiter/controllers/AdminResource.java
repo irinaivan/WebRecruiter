@@ -8,6 +8,8 @@ package com.webrecruiter.controllers;
 import com.webrecruiter.model.mongo.Job;
 import com.webrecruiter.model.mongo.Question;
 import com.webrecruiter.repository.mongo.JobsRepository;
+import com.webrecruiter.utils.JobForCombo;
+import com.webrecruiter.utils.JobsUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,12 +39,18 @@ public class AdminResource {
 
     @Autowired
     JobsRepository jobsRepository;
-    
+
     @Value("${error.jobExistsInDb}")
     private String jobExistsInDb;
-    
+
     @Value("${success.jobCreated}")
     private String jobCreated;
+    
+    @Value("${error.jobNotInDb}")
+    private String jobNotInDb;
+    
+    @Value("${success.jobDeleted}")
+    private String jobDeleted;
 
     @RequestMapping(value = "/createJob", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> createJob(@RequestBody final Map<String, String> jobData) throws ServletException {
@@ -65,11 +73,34 @@ public class AdminResource {
             return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "/listOfJobs", method = RequestMethod.GET)
     @ResponseBody
     public List<Job> getListOfJobs() {
         List<Job> jobs = jobsRepository.getListOfJobsPartialData();
         return jobs;
+    }
+
+    @RequestMapping(value = "/jobsForCombo", method = RequestMethod.GET)
+    @ResponseBody
+    public List<JobForCombo> getJobsForCombo() {
+        List<Job> jobs = jobsRepository.getListOfJobsForCombo();
+        List<JobForCombo> jobsInfoForCombo = JobsUtil.prepareJobsInfoForCombo(jobs);
+        return jobsInfoForCombo;
+    }
+
+    @RequestMapping(value = "/deleteJob", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, String>> deleteJob(@RequestBody final Map<String, String> jobToDeleteInfo) throws ServletException {
+        Map<String, String> responseBody = new HashMap<>();
+        String[] jobInfo = jobToDeleteInfo.get("jobInfo").split("-");
+        Job existingJob = jobsRepository.findOneByJobNameAndJobProject(jobInfo[0], jobInfo[1]);
+        if (existingJob == null) {
+            responseBody.put("message", jobNotInDb);
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            jobsRepository.delete(existingJob);
+            responseBody.put("message", jobDeleted);
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        }
     }
 }
