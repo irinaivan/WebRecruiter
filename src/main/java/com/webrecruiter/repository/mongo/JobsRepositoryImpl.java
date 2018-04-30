@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.webrecruiter.utils.JobsRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -32,6 +33,8 @@ public class JobsRepositoryImpl implements JobsRepositoryCustom {
         query.fields().include("jobDescription");
         query.fields().include("jobRequirements");
         query.fields().exclude("id");
+        query.with(new Sort(Sort.Direction.ASC, "jobName"));
+        query.with(new Sort(Sort.Direction.ASC, "jobProject"));
         jobs = mongoTemplate.find(query, Job.class);
         return jobs;
     }
@@ -43,6 +46,8 @@ public class JobsRepositoryImpl implements JobsRepositoryCustom {
         query.fields().include("jobName");
         query.fields().include("jobProject");
         query.fields().exclude("id");
+        query.with(new Sort(Sort.Direction.ASC, "jobName"));
+        query.with(new Sort(Sort.Direction.ASC, "jobProject"));
         jobs = mongoTemplate.find(query, Job.class);
         return jobs;
     }
