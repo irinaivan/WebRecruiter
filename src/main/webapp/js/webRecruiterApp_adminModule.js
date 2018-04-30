@@ -142,3 +142,22 @@ webRecruiterApp.controller("listOfJobsController", function (tokenRequestsServic
             }
     );
 });
+
+webRecruiterApp.controller("candidatesController", function (tokenRequestsService, $scope) {
+    var jobsComboInfoUrl = "adminModule/jobsForCombo";
+    tokenRequestsService.getRequest(jobsComboInfoUrl).then(
+            function (response) {
+                $scope.jobList = response.data;
+            },
+            function (error) {
+                //empty combo
+                $scope.jobList = [];
+            }
+    );
+    $scope.populateCandidatesTable = function () {
+        console.log("Populating table");
+    };
+    $scope.downloadCV = function () {
+        console.log("Download CV");
+    };
+});

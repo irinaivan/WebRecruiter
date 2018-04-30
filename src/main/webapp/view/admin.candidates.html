@@ -1,15 +1,49 @@
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
-<div>Lista candidati</div>
+<div class="candidate_background">
+    <div class="container-fluid container_with_scrollBarv1" ng-controller="candidatesController">
+        <div class="row">
+            <label class="label_style jobs_label">Lista job-uri:</label>
+            <div class="selectContainer">
+                <select class="form-control" ng-model="selectedJob" ng-change="populateCandidatesTable()" data-ng-options="jobOption as jobOption.jobInfo for jobOption in jobList">
+                    <option style="display:none" value="">Alege un job</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive custom_table">          
+                <table class="table">
+                    <thead>
+                        <tr class="custom-row">
+                            <th>#</th>
+                            <th>Nume Candidat</th>
+                            <th>Job</th>
+                            <th>Nota test</th>
+                            <th>Nota CV</th>
+                            <th>CV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="custom-row">
+                            <td class="text"><span>1</span></td>
+                            <td class="text"><span>Irina Ivan</span></td>
+                            <td class="text"><span>Java Developer-Indigo Pro</span></td>
+                            <td class="text"><span>10</span></td>
+                            <td class="text"><span>10<span></td>
+                            <td class="text"><span><button class="custom_button" ng-click="downloadCV()">Descarca CV</button></span></td>
+                        </tr>
+                        <tr>
+                            <td class="text"><span>2</span></td>
+                            <td class="text"><span>Catalin Brezeanu</span></td>
+                            <td class="text"><span>Java Developer-Avaya</span></td>
+                            <td class="text"><span>10<span></td>
+                            <td class="text"><span>10</span></td>
+                            <td class="text"><span><button class="custom_button" ng-click="downloadCV()">Descarca CV</button></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
