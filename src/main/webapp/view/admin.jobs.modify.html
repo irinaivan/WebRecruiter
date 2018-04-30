@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label class="label_style jobs_label">Lista job-uri adaugate:</label>
                     <div class="selectContainer">
-                        <select class="form-control" ng-model="selectedJob" data-ng-options="jobOption as jobOption.jobInfo for jobOption in jobList">
+                        <select class="form-control" ng-model="selectedJob" ng-change="prepareModifyFormIfNecessary()" data-ng-options="jobOption as jobOption.jobInfo for jobOption in jobList">
                             <option style="display:none" value="">Alege un job</option>
                         </select>
                     </div>
@@ -18,7 +18,7 @@
                         <div class="radio" ng-click="toggleFormDeleteBtn()">
                             <div class="col-sm-8">
                                 <div class="col-sm-4 radio">
-                                    <label class="label_style"><input type="radio" name="actionOption" value="modify" ng-model="modifyDeleteJob" ng-disabled="checkSelectedJob()">Modificare</label>
+                                    <label class="label_style"><input type="radio" name="actionOption" value="modify" ng-model="modifyDeleteJob" ng-disabled="checkSelectedJob()" ng-change = "getJobAllInfo()">Modificare</label>
                                 </div>
                                 <div class="col-sm-4 radio">
                                     <label class="label_style"><input type="radio" name="actionOption" value="delete" ng-model="modifyDeleteJob" ng-disabled="checkSelectedJob()">Stergere</label>
@@ -41,7 +41,7 @@
                 <div ui-view="modifyJob">
                 </div>
             </form>
-            <button class="custom_button" ng-disabled="modifyJobForm.$invalid" ng-click="">Modificare</button>
+            <button class="custom_button" ng-disabled="checkModifyBtn()" ng-click="updateJob()">Modificare</button>
         </div>
     </div>
     <div class="error_label_position">

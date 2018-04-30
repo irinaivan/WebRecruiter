@@ -16,4 +16,8 @@ public interface JobsRepositoryCustom {
     public List<Job> getListOfJobsPartialData();
     
     public List<Job> getListOfJobsForCombo();
+    
+    public Job getJobAllInfo(String jobName, String jobProject);
+    
+    public boolean updateJob(Job jobToUpdate, Job modifiedJob);
 }

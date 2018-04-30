@@ -27,8 +27,9 @@ webRecruiterApp.controller("createJobController", function (tokenRequestsService
     };
 });
 
-webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequestsService, $scope, $state) {
+webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequestsService, convertAllJobInfo, $scope, $state) {
     var jobsComboInfoUrl = "adminModule/jobsForCombo";
+    var initialJobInfo = {};
     tokenRequestsService.getRequest(jobsComboInfoUrl).then(
             function (response) {
                 $scope.jobList = response.data;
@@ -45,7 +46,7 @@ webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequest
         } else {
             return false;
         }
-    }
+    };
 
     $scope.checkModifyFormVisibility = function () {
         if ($scope.modifyDeleteJob === undefined) {
@@ -70,21 +71,62 @@ webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequest
             modifyFormVisibility = false;
         }
     };
+    $scope.prepareModifyFormIfNecessary = function () {
+        if ($scope.modifyDeleteJob === "modify") {
+            $scope.getJobAllInfo();
+        }
+    };
     $scope.deleteJob = function () {
         var deleteJobUrl = "adminModule/deleteJob";
-        var jobToDeleteData = {
+        var parametersList = {
             "jobInfo": $scope.selectedJob.jobInfo
         };
-        var jobToDeleteDataJson = angular.toJson(jobToDeleteData);
-        tokenRequestsService.postRequest(deleteJobUrl, jobToDeleteDataJson).then(
+        tokenRequestsService.getRequestWithParams(deleteJobUrl, parametersList).then(
                 function (response) {
-                   document.getElementById("errorLabel_modifyJob").innerHTML = '';
-                   $state.reload();
+                    document.getElementById("errorLabel_modifyJob").innerHTML = '';
+                    $state.reload();
                 },
                 function (error) {
                     document.getElementById("errorLabel_modifyJob").innerHTML = '<i class="fa fa-exclamation-triangle"></i>' + error.data.message;
                 }
         );
+    };
+    $scope.getJobAllInfo = function () {
+        var allJobInfoUrl = "adminModule/allJobInfo";
+        var parametersList = {
+            "jobInfo": $scope.selectedJob.jobInfo
+        };
+        tokenRequestsService.getRequestWithParams(allJobInfoUrl, parametersList).then(
+                function (response) {
+                    var convertedServerData = convertAllJobInfo.convertJobInfo(response.data);
+                    $scope.modifyJobForm.jobName.$$scope.jobData = convertedServerData;
+                    angular.copy(convertedServerData, initialJobInfo);
+                },
+                function (error) {
+                    //do nothing
+                }
+        );
+    };
+    $scope.updateJob = function () {
+        var updateJobUrl = "adminModule/updateJob";
+        var jobData = $scope.modifyJobForm.jobName.$$scope.jobData;
+        var jobDataToJson = angular.toJson(jobData);
+        tokenRequestsService.putRequest(updateJobUrl, jobDataToJson).then(
+                function (response) {
+                    document.getElementById("errorLabel_modifyJob").innerHTML = '';
+                    $state.reload();
+                },
+                function (error) {
+                    document.getElementById("errorLabel_modifyJob").innerHTML = '<i class="fa fa-exclamation-triangle"></i>' + error.data.message;
+                }
+        );
+    };
+    $scope.checkModifyBtn = function () {
+        if ($scope.modifyJobForm.$invalid || !$scope.modifyJobForm.$dirty || angular.equals(initialJobInfo, $scope.modifyJobForm.jobName.$$scope.jobData)) {
+            return true;
+        } else {
+            return false;
+        }
     };
 });
 

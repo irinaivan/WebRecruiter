@@ -8,6 +8,7 @@ package com.webrecruiter.utils;
 import com.webrecruiter.model.mongo.Job;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -20,5 +21,9 @@ public class JobsUtil {
             jobsInfoForCombo.add(new JobForCombo(job.getJobName(), job.getJobProject()));
         }
         return jobsInfoForCombo;
+    }
+    
+    public static boolean jobNameAndProjectValidation(String jobNameOrProject){
+        return jobNameOrProject.contains("-");
     }
 }
