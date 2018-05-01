@@ -91,21 +91,6 @@ public class AdminResource {
         }
     }
 
-    @RequestMapping(value = "/listOfJobs", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Job> getListOfJobs() {
-        List<Job> jobs = jobsRepository.getListOfJobsPartialData();
-        return jobs;
-    }
-
-    @RequestMapping(value = "/jobsForCombo", method = RequestMethod.GET)
-    @ResponseBody
-    public List<JobForCombo> getJobsForCombo() {
-        List<Job> jobs = jobsRepository.getListOfJobsForCombo();
-        List<JobForCombo> jobsInfoForCombo = JobsUtil.prepareJobsInfoForCombo(jobs);
-        return jobsInfoForCombo;
-    }
-
     @RequestMapping(value = "/deleteJob", method = RequestMethod.GET)
     public ResponseEntity<Map<String, String>> deleteJob(@RequestParam("jobInfo") String jobNameAndProject) {
         Map<String, String> responseBody = new HashMap<>();
