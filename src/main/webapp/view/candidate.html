@@ -1,13 +1,21 @@
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
-<div>Candidate</div>
+<div>
+    <nav class="navbar navbar-default navbar-fixed-top" ng-controller="commonNavBarController">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#candidateNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <div class="navbar-brand"></div>
+        </div>
+        <div class="collapse navbar-collapse" id="candidateNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li ui-sref-active="active"><a ui-sref="home" ng-click="logout()">Iesire</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div ui-view=""></div>
+</div>
 
 

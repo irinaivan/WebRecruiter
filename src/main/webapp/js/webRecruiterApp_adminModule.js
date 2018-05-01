@@ -1,12 +1,6 @@
 var modifyFormVisibility = false;
 var deleteButtonVisibility = false;
 
-webRecruiterApp.controller("adminNavBarController", function ($scope, $window) {
-    $scope.logout = function () {
-        $window.sessionStorage.clear();
-    };
-});
-
 webRecruiterApp.controller("createJobController", function (tokenRequestsService, $scope, $state) {
     $scope.createJob = function () {
         var jobData = $scope.createJobForm.jobName.$$scope.jobData;
@@ -28,7 +22,7 @@ webRecruiterApp.controller("createJobController", function (tokenRequestsService
 });
 
 webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequestsService, convertAllJobInfo, $scope, $state) {
-    var jobsComboInfoUrl = "adminModule/jobsForCombo";
+    var jobsComboInfoUrl = "commonModule/jobsForCombo";
     var initialJobInfo = {};
     tokenRequestsService.getRequest(jobsComboInfoUrl).then(
             function (response) {
@@ -131,7 +125,7 @@ webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequest
 });
 
 webRecruiterApp.controller("listOfJobsController", function (tokenRequestsService, $scope) {
-    var url = "adminModule/listOfJobs";
+    var url = "commonModule/listOfJobs";
     tokenRequestsService.getRequest(url).then(
             function (response) {
                 $scope.jobs = response.data;
@@ -144,7 +138,7 @@ webRecruiterApp.controller("listOfJobsController", function (tokenRequestsServic
 });
 
 webRecruiterApp.controller("candidatesController", function (tokenRequestsService, $scope) {
-    var jobsComboInfoUrl = "adminModule/jobsForCombo";
+    var jobsComboInfoUrl = "commonModule/jobsForCombo";
     tokenRequestsService.getRequest(jobsComboInfoUrl).then(
             function (response) {
                 $scope.jobList = response.data;

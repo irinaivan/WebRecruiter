@@ -23,26 +23,42 @@ webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
             .state("candidate", {
                 url: "/candidate",
                 templateUrl: "view/candidate.html"
-                /*resolve: {
-                    security: ['$q', '$window', function ($q, $window) {
-                            if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
-                                    $window.sessionStorage["authenticatedUserRole"] === "admin") {
-                                return $q.reject("Not Authorized");
-                            }
-                        }]
-                }*/
+                        /*resolve: {
+                         security: ['$q', '$window', function ($q, $window) {
+                         if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
+                         $window.sessionStorage["authenticatedUserRole"] === "admin") {
+                         return $q.reject("Not Authorized");
+                         }
+                         }]
+                         }*/
+            })
+            .state("candidate.tabs", {
+                url: "/info",
+                templateUrl: "view/candidate.tabs.html"
+            })
+            .state("candidate.tabs.jobs", {
+                url: "/jobs",
+                templateUrl: "view/jobs.listOfJobs.html"
+            })
+            .state("candidate.tabs.chooseTest", {
+                url: "/chooseTest",
+                templateUrl: "view/candidate.tabs.chooseTest.html"
+            })
+            .state("candidate.takeTest", {
+                url: "/takeTest",
+                templateUrl: "view/candidate.takeTest.html"
             })
             .state("admin", {
                 url: "/admin",
                 templateUrl: "view/admin.html"
-                /*resolve: {
-                    security: ['$q', '$window', function ($q, $window) {
-                            if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
-                                    $window.sessionStorage["authenticatedUserRole"] === 'candidate') {
-                                return $q.reject("Not Authorized");
-                            }
-                        }]
-                }*/
+                        /*resolve: {
+                         security: ['$q', '$window', function ($q, $window) {
+                         if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
+                         $window.sessionStorage["authenticatedUserRole"] === 'candidate') {
+                         return $q.reject("Not Authorized");
+                         }
+                         }]
+                         }*/
             })
             .state("admin.candidates", {
                 url: "/candidates",
@@ -54,7 +70,7 @@ webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state("admin.jobs.listOfJobs", {
                 url: "/listOfJobs",
-                templateUrl: "view/admin.jobs.listOfJobs.html"
+                templateUrl: "view/jobs.listOfJobs.html"
             })
             .state("admin.jobs.create", {
                 url: "/create",
@@ -90,6 +106,15 @@ webRecruiterApp.run(function ($transitions, $state) {
     $transitions.onStart({}, function ($transition$) {
         if ($transition$.$to().name === 'admin') {
             $state.transitionTo('admin.jobs.listOfJobs');
+        }
+        if ($transition$.$to().name === 'candidate' || $transition$.$to().name === 'candidate.tabs') {
+            $state.transitionTo('candidate.tabs.jobs');
+        }
+        if ($transition$.$from().name === 'candidate.takeTest') {
+            $state.transitionTo('home');
+        }
+        if ($transition$.$to().name === 'candidate.takeTest' && $transition$.$from().name !== 'candidate.tabs.chooseTest') {
+            $state.transitionTo('candidate.tabs.jobs');
         }
     });
 });
