@@ -28,7 +28,7 @@ webRecruiterApp.controller("loginController", function ($scope, httpLoginRequest
                     }
                 },
                 function (error) {
-                    document.getElementById("errorLabel_login").innerHTML = '<i class="\fas fa-exclamation-triangle\"></i>' + error.data.message;
+                    document.getElementById("errorLabel_login").innerHTML = '<i class="fas fa-exclamation-triangle"></i>' + error.data.message;
                 }
         );
     };

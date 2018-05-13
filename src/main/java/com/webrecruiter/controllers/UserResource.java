@@ -34,29 +34,33 @@ import org.springframework.http.ResponseEntity;
 @PropertySource("classpath:http_messages.properties")
 @RequestMapping("/loginModule")
 public class UserResource {
+
     @Autowired
     UserRepository usersRepository;
-    
+
     @Value("${error.userExistsInDb}")
     private String userExistsInDb;
-    
+
     @Value("${success.userCreated}")
     private String userCreated;
-    
+
     @Value("${success.passwordUpdated}")
     private String passwordUpdated;
-    
+
     @Value("${error.userNotInDb}")
     private String userNotInDb;
     
+    @Value("${error.invalidPassword}")
+    private String invalidPassword;
+
     @Autowired
     private JwtGenerator jwtGenerator;
-    
-    @RequestMapping(value="/login", method=RequestMethod.POST)
-    public Map<String, String> login(@RequestBody final Map<String, String> loginCredentials) throws ServletException {
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, String>> login(@RequestBody final Map<String, String> loginCredentials) throws ServletException {
         String token = null;
         String userRole = null;
-        Map<String,String> responseBody = new HashMap<>();
+        Map<String, String> responseBody = new HashMap<>();
         User userToLogin = new User(loginCredentials.get("userName"));
         userToLogin.setId(loginCredentials.get("userName"));
         userToLogin.setUserPassword(loginCredentials.get("userPassword"));
@@ -65,33 +69,39 @@ public class UserResource {
             if (userInDb.getUserPassword().equals(userToLogin.getUserPassword())) {
                 token = jwtGenerator.generate(userToLogin);
                 userRole = userInDb.getRole();
+                responseBody.put("token", token);
+                responseBody.put("userRole", userRole);
+                return new ResponseEntity<>(responseBody, HttpStatus.OK);
+            } else {
+                responseBody.put("message", invalidPassword);
+                return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        } else {
+            responseBody.put("message", userNotInDb);
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        responseBody.put("token", token);
-        responseBody.put("userRole", userRole);
-        return responseBody;
     }
-    
-    @RequestMapping(value="/changePassword", method=RequestMethod.POST)
-    public ResponseEntity<Map<String,String>> changePassword(@RequestBody final Map<String, String> changedCredentials) throws ServletException {
-        Map<String,String> responseBody = new HashMap<>();
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, String>> changePassword(@RequestBody final Map<String, String> changedCredentials) throws ServletException {
+        Map<String, String> responseBody = new HashMap<>();
         User userToUpdate = new User(changedCredentials.get("userName"));
         userToUpdate.setId(changedCredentials.get("userName"));
         userToUpdate.setUserPassword(changedCredentials.get("newUserPassword"));
         if (usersRepository.existsById(userToUpdate.getId())) {
-           usersRepository.changePassword(userToUpdate.getUserPassword(), userToUpdate.getId());
-           responseBody.put("message", passwordUpdated);
-           return new ResponseEntity<>(responseBody,HttpStatus.OK);
+            usersRepository.changePassword(userToUpdate.getUserPassword(), userToUpdate.getId());
+            responseBody.put("message", passwordUpdated);
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         } else {
-           responseBody.put("message", userNotInDb);
-           return new ResponseEntity<>(responseBody,HttpStatus.INTERNAL_SERVER_ERROR);
+            responseBody.put("message", userNotInDb);
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
-    
-    @RequestMapping(value="/register", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)   
-    public ResponseEntity<Map<String,String>> register(@RequestBody final Map<String, String> userCredentials) throws ServletException {
-        Map<String,String> responseBody = new HashMap<>();
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, String>> register(@RequestBody final Map<String, String> userCredentials) throws ServletException {
+        Map<String, String> responseBody = new HashMap<>();
         User newUser = new User(userCredentials.get("userName"), UserRole.CANDIDATE.toString());
         newUser.setId(userCredentials.get("userName"));
         newUser.setFirstName(userCredentials.get("firstName"));
@@ -100,12 +110,12 @@ public class UserResource {
         newUser.setUserPassword(userCredentials.get("userPassword"));
         if (usersRepository.existsById(newUser.getId())) {
             responseBody.put("message", userExistsInDb);
-            return new ResponseEntity<>(responseBody,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             usersRepository.save(newUser);
             responseBody.put("message", userCreated);
-            return new ResponseEntity<>(responseBody,HttpStatus.OK);
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }
     }
-    
+
 }
