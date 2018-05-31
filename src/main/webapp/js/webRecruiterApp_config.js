@@ -48,6 +48,10 @@ webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
                 url: "/takeTest",
                 templateUrl: "view/candidate.takeTest.html"
             })
+            .state("candidate.uploadCV", {
+                url: "/uploadCV",
+                templateUrl: "view/candidate.uploadCV.html"
+            })
             .state("admin", {
                 url: "/admin",
                 templateUrl: "view/admin.html"

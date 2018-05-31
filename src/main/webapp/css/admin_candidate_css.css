@@ -74,7 +74,11 @@ body, html {
     height: 65%;
 }
 
-#createJobGrid, #modifyJobGrid {
+.container_with_scrollBarv3, .parent{
+    height: 60%;
+}
+
+#createJobGrid, #modifyJobGrid, #takeTestGrid {
     height:100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -151,6 +155,10 @@ td {
     margin: 150px auto;
 }
 
+.uploadCV_background_adjustments {
+    margin: 300px auto !important;
+}
+
 .custom_table {
     margin-top: 20px;
 }
@@ -161,4 +169,82 @@ td {
 
 .custom_div {
     margin-top: 10px;
+}
+
+.take_test_alignment {
+    margin-left: 15px;
+}
+
+.take_test_radio_button_alignment {
+    padding-bottom: 15px;
+}
+
+.custom_row_alignment {
+    text-align: -webkit-center;
+}
+
+.inputfile_disabled{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    display: inline-block; 
+}
+.inputfile_disabled + label{
+    font-size: 15px;
+    font-family: 'Chewy';
+    border-radius: 5px;
+    font-weight: normal;
+    color: white;
+    padding: 6px;
+    background-color: #616A6B;
+    display: inline-block;  
+}
+.inputfile_design{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    display: inline-block;
+}
+.inputfile_design + label{
+    font-size: 15px;
+    font-family: 'Chewy';
+    border-radius: 5px;
+    font-weight: normal;
+    color: white;
+    padding: 6px;
+    background-color: #2874A6;
+    display: inline-block;
+    cursor: pointer; /* "hand" cursor */
+}
+.inputfile_design:focus + label{
+    outline: 1px dotted #000;/* for browsers that do not understand the -webkit… expression*/
+    outline: -webkit-focus-ring-color auto 5px;/*little trick for obtaining default outline looks on Chrome, Opera and Safari*/
+    background-color: #1B4F72;
+}
+.inputfile_design +label:hover {
+    background-color: #1B4F72;
+}
+
+.upload_logo{
+    margin-right: 6px;
+    margin-left: 2px;
+}
+
+.trim_text{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.success_label_position {
+    text-align: center;
+    color: #2874A6;
+    font-family: 'Chewy';
+    font-size: 15px; 
 }

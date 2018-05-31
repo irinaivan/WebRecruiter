@@ -1,7 +1,91 @@
 <div class="candidate_background">
-    <div class="container-fluid container_with_scrollBarv1" ng-controller="takeTestController">
-        <div class="row">
-            <div>aaaa</div>
+    <div class="container-fluid container_with_scrollBarv2">
+        <div id="takeTestGrid" ng-controller="takeTestController">
+            <form name="takeTest" novalidate>
+                <div class="row take_test_alignment">
+                    <label class="label_style" name="question1" ng-model="question1">
+                        <span>{{jobQuestions.question1}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment take_test_radio_button_alignment">
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion1" ng-model="responseQuestion1" value={{jobQuestions.response1Q1}}>
+                        <span>{{jobQuestions.response1Q1}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion1" ng-model="responseQuestion1" value={{jobQuestions.response2Q1}}>
+                        <span>{{jobQuestions.response2Q1}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion1" ng-model="responseQuestion1" value={{jobQuestions.response3Q1}}>
+                        <span>{{jobQuestions.response3Q1}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment">
+                    <label class="label_style" name="question2" ng-model="question2">
+                        <span>{{jobQuestions.question2}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment take_test_radio_button_alignment">
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion2" ng-model="responseQuestion2" value={{jobQuestions.response1Q2}}>
+                        <span>{{jobQuestions.response1Q2}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion2" ng-model="responseQuestion2" value={{jobQuestions.response2Q2}}>
+                        <span>{{jobQuestions.response2Q2}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion2" ng-model="responseQuestion2" value={{jobQuestions.response3Q2}}>
+                        <span>{{jobQuestions.response3Q2}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment">
+                    <label class="label_style" name="question3" ng-model="question3">
+                        <span>{{jobQuestions.question3}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment take_test_radio_button_alignment">
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion3" ng-model="responseQuestion3" value={{jobQuestions.response1Q3}}>
+                        <span>{{jobQuestions.response1Q3}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion3" ng-model="responseQuestion3" value={{jobQuestions.response2Q3}}>
+                        <span>{{jobQuestions.response2Q3}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion3" ng-model="responseQuestion3" value={{jobQuestions.response3Q3}}>
+                        <span>{{jobQuestions.response3Q3}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment">
+                    <label class="label_style" name="question4" ng-model="question4">
+                        <span>{{jobQuestions.question4}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment take_test_radio_button_alignment">
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion4" ng-model="responseQuestion4" value={{jobQuestions.response1Q4}}>
+                        <span>{{jobQuestions.response1Q4}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion4" ng-model="responseQuestion4" value={{jobQuestions.response2Q4}}>
+                        <span>{{jobQuestions.response2Q4}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion4" ng-model="responseQuestion4" value={{jobQuestions.response3Q4}}>
+                        <span>{{jobQuestions.response3Q4}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment">
+                    <label class="label_style" name="question5" ng-model="question5">
+                        <span>{{jobQuestions.question5}}</span>
+                    </label>
+                </div>
+                <div class="row take_test_alignment take_test_radio_button_alignment">
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion5" ng-model="responseQuestion5" value={{jobQuestions.response1Q5}}>
+                        <span>{{jobQuestions.response1Q5}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion5" ng-model="responseQuestion5" value={{jobQuestions.response2Q5}}>
+                        <span>{{jobQuestions.response2Q5}}</span>
+                    </label>
+                    <label class="col-sm-3 radio-inline label_style"><input type="radio" name="responseQuestion5" ng-model="responseQuestion5" value={{jobQuestions.response3Q5}}>
+                        <span>{{jobQuestions.response3Q5}}</span>
+                    </label>
+                </div>
+            </form>
+            <div class="row">
+                <button class="custom_button" ng-disabled="checkRadioButtons()" ng-click="submitTestAnswers()">Trimite raspunsuri</button>
+            </div>
         </div>
     </div>
 </div>

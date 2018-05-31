@@ -1,0 +1,14 @@
+<div class="candidate_background uploadCV_background_adjustments">
+    <form name="uploadCVForm" method="post" enctype="multipart/form-data" ng-controller="uploadCVController">
+        <div class="success_label_position">
+            <label id="successLabel_uploadCV"></label>
+        </div>
+        <div class="error_label_position">
+            <label id="errorLabel_uploadCV"></label>
+        </div>
+        <div class="row custom_row_alignment">
+            <input type="file" id="cvFile" name="cvFile" accept=".docx" class="inputfile_design" onchange="angular.element(this).scope().uploadFile(this.files)">
+            <label class="trim_text" for="cvFile"><i class="fa fa-upload upload_logo"></i><span id="label_span">Incarca CV-ul!</span></label> 
+        </div>
+    </form>
+</div>

@@ -41,12 +41,26 @@ webRecruiterApp.service('convertAllJobInfo', function () {
             convertedData.jobDescription = serverData.jobDescription;
             convertedData.jobRequirements = serverData.jobRequirements;
             for (var i = 0; i < serverData.questions.length; i++) {
-                var question = serverData.questions[i];
                 convertedData["question" + (i + 1)] = serverData.questions[i].questionText;
                 convertedData["response1Q" + (i + 1)] = serverData.questions[i].questionAnswer1;
                 convertedData["response2Q" + (i + 1)] = serverData.questions[i].questionAnswer2;
                 convertedData["response3Q" + (i + 1)] = serverData.questions[i].questionAnswer3;
                 convertedData["correctResponseQ" + (i + 1)] = serverData.questions[i].correctAnswer;
+            }
+            return convertedData;
+        }
+    };
+});
+
+webRecruiterApp.service('convertQuestionInfo', function () {
+    return {
+        convertQuestions: function (serverData) {
+            var convertedData = {};
+            for (var i = 0; i < serverData.length; i++) {
+                convertedData["question" + (i + 1)] = (i+1)+". "+serverData[i].questionText;
+                convertedData["response1Q" + (i + 1)] = serverData[i].questionAnswer1;
+                convertedData["response2Q" + (i + 1)] = serverData[i].questionAnswer2;
+                convertedData["response3Q" + (i + 1)] = serverData[i].questionAnswer3;
             }
             return convertedData;
         }
