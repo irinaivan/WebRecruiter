@@ -7,8 +7,12 @@
             <label id="errorLabel_uploadCV"></label>
         </div>
         <div class="row custom_row_alignment">
-            <input type="file" id="cvFile" name="cvFile" accept=".docx" class="inputfile_design" onchange="angular.element(this).scope().uploadFile(this.files)">
-            <label class="trim_text" for="cvFile"><i class="fa fa-upload upload_logo"></i><span id="label_span">Incarca CV-ul!</span></label> 
+            <input type="file" id="cvFile" name="cvFile" accept=".docx" onchange="angular.element(this).scope().uploadFile(this.files)" ng-disabled="checkTestPoints()">
+            <label class="trim_text" id="cvFileLabel" for="cvFile"><i class="fa fa-upload upload_logo"></i><span id="label_span">Incarca CV-ul!</span></label> 
+        </div>
+        <div class="success_label_position" id="processingCV" style="display: none;">
+            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+            <span>CV-ul este procesat!</span>
         </div>
     </form>
 </div>

@@ -5,21 +5,32 @@
  */
 package com.webrecruiter.controllers;
 
+import com.webrecruiter.model.mongo.Candidate;
 import com.webrecruiter.model.mongo.Job;
 import com.webrecruiter.model.mongo.Question;
+import com.webrecruiter.repository.mongo.CandidatesRepository;
 import com.webrecruiter.repository.mongo.JobsRepository;
 import com.webrecruiter.utils.JobForCombo;
 import com.webrecruiter.utils.JobsUtil;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +52,9 @@ public class AdminResource {
 
     @Autowired
     JobsRepository jobsRepository;
+
+    @Autowired
+    CandidatesRepository candidatesRepository;
 
     @Value("${error.jobExistsInDb}")
     private String jobExistsInDb;
@@ -114,7 +128,7 @@ public class AdminResource {
         return jobToUpdate;
     }
 
-    @RequestMapping(value = "/updateJob", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateJob", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, String>> updateJob(@RequestBody final Map<String, String> jobData) {
         Map<String, String> responseBody = new HashMap<>();
@@ -138,5 +152,33 @@ public class AdminResource {
             responseBody.put("message", unableToUpdateJob);
             return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/jobCandidates", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Candidate> getCandidatesPerJob(@RequestParam("jobInfo") String jobNameAndProject) {
+        List<Candidate> candidatesPerJob = new ArrayList<Candidate>();
+        String[] jobInfo = jobNameAndProject.split("-");
+        Job existingJob = jobsRepository.findOneByJobNameAndJobProject(jobInfo[0], jobInfo[1]);
+        int minTestPoints = existingJob.getQuestions().size() / 2;
+        candidatesPerJob = candidatesRepository.getAllCandidatesPerJob(jobInfo[0], jobInfo[1], minTestPoints);
+        return candidatesPerJob;
+    }
+
+    @RequestMapping(value = "/downloadCV", method = RequestMethod.GET)
+    public ResponseEntity<ByteArrayResource> downloadCV(@RequestParam("cvPath") String cvPath) throws IOException {
+    Path filePath = Paths.get(cvPath)
+                .toAbsolutePath().normalize();
+    String fileName = cvPath.substring(cvPath.lastIndexOf("/")+1);
+    byte[] data = Files.readAllBytes(filePath);
+    ByteArrayResource resource = new ByteArrayResource(data);
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.add(HttpHeaders.CONTENT_DISPOSITION, fileName);
+    return ResponseEntity.ok()
+            .headers(headers)
+            .contentLength(data.length)
+            .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+            .body(resource);
     }
 }

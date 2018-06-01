@@ -32,7 +32,7 @@ public class Candidate {
     
     private int testPoints;
     
-    private int cvPoints;
+    private double cvPoints;
     
     private String cvPath;
     
@@ -105,11 +105,11 @@ public class Candidate {
         this.testPoints = testPoints;
     }
 
-    public int getCvPoints() {
+    public double getCvPoints() {
         return cvPoints;
     }
 
-    public void setCvPoints(int cvPoints) {
+    public void setCvPoints(double cvPoints) {
         this.cvPoints = cvPoints;
     }
 

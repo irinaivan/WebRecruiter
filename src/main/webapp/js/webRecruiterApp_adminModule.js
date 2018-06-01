@@ -105,7 +105,7 @@ webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequest
         var updateJobUrl = "adminModule/updateJob";
         var jobData = $scope.modifyJobForm.jobName.$$scope.jobData;
         var jobDataToJson = angular.toJson(jobData);
-        tokenRequestsService.putRequest(updateJobUrl, jobDataToJson).then(
+        tokenRequestsService.postRequest(updateJobUrl, jobDataToJson).then(
                 function (response) {
                     document.getElementById("errorLabel_modifyJob").innerHTML = '';
                     $state.reload();
@@ -137,7 +137,7 @@ webRecruiterApp.controller("listOfJobsController", function (tokenRequestsServic
     );
 });
 
-webRecruiterApp.controller("candidatesController", function (tokenRequestsService, $scope) {
+webRecruiterApp.controller("candidatesController", function (tokenRequestsService, $scope, $window, $http) {
     var jobsComboInfoUrl = "commonModule/jobsForCombo";
     tokenRequestsService.getRequest(jobsComboInfoUrl).then(
             function (response) {
@@ -149,9 +149,57 @@ webRecruiterApp.controller("candidatesController", function (tokenRequestsServic
             }
     );
     $scope.populateCandidatesTable = function () {
-        console.log("Populating table");
+        var candidatesPerJobUrl = "adminModule/jobCandidates";
+        var parametersList = {
+            "jobInfo": $scope.selectedJob.jobInfo
+        };
+        tokenRequestsService.getRequestWithParams(candidatesPerJobUrl, parametersList).then(
+                function (response) {
+                    $scope.candidates = response.data;
+                },
+                function (error) {
+                    //empty table
+                    $scope.candidates = [];
+                }
+        );
     };
-    $scope.downloadCV = function () {
-        console.log("Download CV");
+    $scope.downloadCV = function (cvPath) {
+        //$window.open("adminModule/downloadCV?cvPath="+cvPath, '_blank','');
+        $http({
+            method: 'GET',
+            url: 'adminModule/downloadCV',
+            headers: {'Authorization': 'Bearer ' + $window.sessionStorage["token"]},
+            params: {cvPath: cvPath},
+            responseType: 'arraybuffer'
+        }).then(
+                function (response) {
+                    debugger;
+                    headers = response.headers();
+
+                    var filename = headers['content-disposition'];
+                    var contentType = headers['content-type'];
+
+                    var linkElement = document.createElement('a');
+                    try {
+                        var blob = new Blob([response.data], {type: contentType});
+                        var url = window.URL.createObjectURL(blob);
+
+                        linkElement.setAttribute('href', url);
+                        linkElement.setAttribute("download", filename);
+
+                        var clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                    } catch (ex) {
+                        console.log(ex);
+                    }
+                },
+                function (error) {
+                   //do nothing 
+                }
+        );
     };
 });

@@ -6,11 +6,16 @@
 package com.webrecruiter.utils;
 
 import com.webrecruiter.model.mongo.Candidate;
+import java.util.List;
 
 /**
  *
  * @author irina
  */
 public interface CandidatesRepositoryCustom {
-    public boolean updateCandidateTestPoints(Candidate candidateToUpdate, int testPoints);
+    public void updateCandidateTestPoints(Candidate candidateToUpdate, int testPoints);
+    
+    public void updateCandidateCVPathAndPoints(Candidate candidateToUpdate, double cvPoints, String cvPath);
+    
+    public List<Candidate> getAllCandidatesPerJob (String jobName, String jobProject, int testMinPoints);
 }

@@ -37,9 +37,12 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file, String userName, String jobNameAndProject) {
         // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        //String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        jobNameAndProject = jobNameAndProject.replace("-", "_");
+        jobNameAndProject = jobNameAndProject.replace(" ", "_");
+        String fileName = String.format("%s_%s.%s", userName, jobNameAndProject, "docx");
 
         try {
             // Check if the file's name contains invalid characters

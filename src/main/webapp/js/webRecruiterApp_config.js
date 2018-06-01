@@ -22,15 +22,15 @@ webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state("candidate", {
                 url: "/candidate",
-                templateUrl: "view/candidate.html"
-                        /*resolve: {
-                         security: ['$q', '$window', function ($q, $window) {
-                         if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
-                         $window.sessionStorage["authenticatedUserRole"] === "admin") {
-                         return $q.reject("Not Authorized");
-                         }
-                         }]
-                         }*/
+                templateUrl: "view/candidate.html",
+                resolve: {
+                    security: ['$q', '$window', function ($q, $window) {
+                            if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
+                                    $window.sessionStorage["authenticatedUserRole"] === "admin") {
+                                return $q.reject("Not Authorized");
+                            }
+                        }]
+                }
             })
             .state("candidate.tabs", {
                 url: "/info",
@@ -54,15 +54,15 @@ webRecruiterApp.config(function ($stateProvider, $urlRouterProvider) {
             })
             .state("admin", {
                 url: "/admin",
-                templateUrl: "view/admin.html"
-                        /*resolve: {
-                         security: ['$q', '$window', function ($q, $window) {
-                         if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
-                         $window.sessionStorage["authenticatedUserRole"] === 'candidate') {
-                         return $q.reject("Not Authorized");
-                         }
-                         }]
-                         }*/
+                templateUrl: "view/admin.html",
+                resolve: {
+                    security: ['$q', '$window', function ($q, $window) {
+                            if ($window.sessionStorage["token"] === null || $window.sessionStorage["token"] === undefined ||
+                                    $window.sessionStorage["authenticatedUserRole"] === 'candidate') {
+                                return $q.reject("Not Authorized");
+                            }
+                        }]
+                }
             })
             .state("admin.candidates", {
                 url: "/candidates",
@@ -114,10 +114,13 @@ webRecruiterApp.run(function ($transitions, $state) {
         if ($transition$.$to().name === 'candidate' || $transition$.$to().name === 'candidate.tabs') {
             $state.transitionTo('candidate.tabs.jobs');
         }
-        if ($transition$.$from().name === 'candidate.takeTest') {
-            $state.transitionTo('home');
-        }
+        /*if ($transition$.$from().name === 'candidate.takeTest') {
+         $state.transitionTo('home');
+         }*/
         if ($transition$.$to().name === 'candidate.takeTest' && $transition$.$from().name !== 'candidate.tabs.chooseTest') {
+            $state.transitionTo('candidate.tabs.jobs');
+        }
+        if ($transition$.$to().name === 'candidate.uploadCV' && $transition$.$from().name !== 'candidate.takeTest') {
             $state.transitionTo('candidate.tabs.jobs');
         }
     });

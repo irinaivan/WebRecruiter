@@ -105,7 +105,6 @@ body, html {
 }
 
 .table {
-    height: 100%;
     width: 100%;
     margin-bottom: 0;
 }
@@ -122,6 +121,7 @@ body, html {
     font-size: 13px;
     font-family: 'Chewy';
     overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .wrapTextTooltip + .tooltip.right .tooltip-arrow {
@@ -164,7 +164,7 @@ td {
 }
 
 .custom-row { 
-    height: 0px!important; 
+    height: 0px!important;
 }
 
 .custom_div {
@@ -247,4 +247,13 @@ td {
     color: #2874A6;
     font-family: 'Chewy';
     font-size: 15px; 
+}
+
+.upload_CV {
+    background-color: #616A6B!important;
+    cursor: default!important;
+}
+
+.text-with-newlines {
+    white-space: pre-wrap;
 }

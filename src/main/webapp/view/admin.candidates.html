@@ -1,5 +1,5 @@
 <div class="candidate_background">
-    <div class="container-fluid container_with_scrollBarv1" ng-controller="candidatesController">
+    <div class="container-fluid" ng-controller="candidatesController">
         <div class="row">
             <label class="label_style jobs_label">Lista job-uri:</label>
             <div class="selectContainer">
@@ -8,37 +8,28 @@
                 </select>
             </div>
         </div>
-        <div class="row">
+        <div class="container-fluid container_with_scrollBarv1">
             <div class="table-responsive custom_table">          
                 <table class="table">
                     <thead>
                         <tr class="custom-row">
                             <th>#</th>
+                            <th>Nume utilizator</th>
                             <th>Nume Candidat</th>
-                            <th>Job</th>
                             <th>Nota test</th>
                             <th>Nota CV</th>
                             <th>CV</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="custom-row">
-                            <td class="text"><span>1</span></td>
-                            <td class="text"><span>Irina Ivan</span></td>
-                            <td class="text"><span>Java Developer-Indigo Pro</span></td>
-                            <td class="text"><span>10</span></td>
-                            <td class="text"><span>10<span></td>
-                            <td class="text"><span><button class="custom_button" ng-click="downloadCV()">Descarca CV</button></span></td>
+                        <tr class="table_row" ng-repeat="candidate in candidates">
+                            <td class="text"><span>{{$index}}</span></td>
+                            <td class="text"><span>{{candidate.userName}}</span></td>
+                            <td class="text"><span>{{candidate.firstName}} {{candidate.lastName}}</span></td>
+                            <td class="text"><span>{{candidate.testPoints}}</span></td>
+                            <td class="text"><span>{{candidate.cvPoints}}<span></td>
+                            <td class="text"><span><button class="custom_button" ng-click="downloadCV(candidate.cvPath)">Descarca CV</button></span></td>
                         </tr>
-                        <tr>
-                            <td class="text"><span>2</span></td>
-                            <td class="text"><span>Catalin Brezeanu</span></td>
-                            <td class="text"><span>Java Developer-Avaya</span></td>
-                            <td class="text"><span>10<span></td>
-                            <td class="text"><span>10</span></td>
-                            <td class="text"><span><button class="custom_button" ng-click="downloadCV()">Descarca CV</button></span></td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>

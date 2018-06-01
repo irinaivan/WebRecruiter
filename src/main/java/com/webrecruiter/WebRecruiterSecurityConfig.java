@@ -21,6 +21,8 @@ import com.webrecruiter.jwtsecurity.JwtAuthenticationEntryPoint;
 import com.webrecruiter.jwtsecurity.JwtAuthenticationProvider;
 import com.webrecruiter.jwtsecurity.JwtAuthenticationTokenFilter;
 import com.webrecruiter.jwtsecurity.JwtSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
 /**
  *
@@ -29,13 +31,12 @@ import com.webrecruiter.jwtsecurity.JwtSuccessHandler;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
-public class WebRecruiterSecurityConfig extends WebSecurityConfigurerAdapter { 
+public class WebRecruiterSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationProvider authenticationProvider;
     @Autowired
     private JwtAuthenticationEntryPoint entryPoint;
-    
 
     @Bean
     @Override
@@ -50,11 +51,24 @@ public class WebRecruiterSecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationSuccessHandler(new JwtSuccessHandler());
         return filter;
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        authenticationTokenFilter()
+                .setRequiresAuthenticationRequestMatcher(new OrRequestMatcher(
+                        new AntPathRequestMatcher("/adminModule/**"),
+                        new AntPathRequestMatcher("/candidateModule/**"),
+                        new AntPathRequestMatcher("/commonModule/**")
+                ));
 
         http.csrf().disable()
-                .authorizeRequests().antMatchers("**/rest/**").authenticated()
+                .authorizeRequests().antMatchers("**/adminModule/**").authenticated()
+                .and()
+                .authorizeRequests().antMatchers("**/candidateModule/**").authenticated()
+                .and()
+                .authorizeRequests().antMatchers("**/commonModule/**").authenticated()
+                .and()
+                .authorizeRequests().antMatchers("**/loginModule/**").permitAll()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and()

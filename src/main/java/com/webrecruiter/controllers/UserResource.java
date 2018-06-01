@@ -49,9 +49,12 @@ public class UserResource {
 
     @Value("${error.userNotInDb}")
     private String userNotInDb;
-    
+
     @Value("${error.invalidPassword}")
     private String invalidPassword;
+
+    @Value("${error.adminCanNotChangePass}")
+    private String adminCanNotChangePass;
 
     @Autowired
     private JwtGenerator jwtGenerator;
@@ -71,6 +74,7 @@ public class UserResource {
                 userRole = userInDb.getRole();
                 responseBody.put("token", token);
                 responseBody.put("userRole", userRole);
+                responseBody.put("userName", userInDb.getUserName());
                 return new ResponseEntity<>(responseBody, HttpStatus.OK);
             } else {
                 responseBody.put("message", invalidPassword);
@@ -89,9 +93,14 @@ public class UserResource {
         userToUpdate.setId(changedCredentials.get("userName"));
         userToUpdate.setUserPassword(changedCredentials.get("newUserPassword"));
         if (usersRepository.existsById(userToUpdate.getId())) {
-            usersRepository.changePassword(userToUpdate.getUserPassword(), userToUpdate.getId());
-            responseBody.put("message", passwordUpdated);
-            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+            if (userToUpdate.getUserName().toLowerCase().equals("admin")) {
+                responseBody.put("message", adminCanNotChangePass);
+                return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                usersRepository.changePassword(userToUpdate.getUserPassword(), userToUpdate.getId());
+                responseBody.put("message", passwordUpdated);
+                return new ResponseEntity<>(responseBody, HttpStatus.OK);
+            }
         } else {
             responseBody.put("message", userNotInDb);
             return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);

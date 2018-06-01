@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 public class CvFileUtilsService {
 
     private final Path fileLocation;
+    private final int MAXIMUM_POINTS_PER_PATTERN = 3;
 
     @Autowired
     public CvFileUtilsService(FileStorageProperties fileStorageProperties) {
@@ -42,7 +43,7 @@ public class CvFileUtilsService {
         String documentText = "";
         try {
             File cvFile = new File(fileName);
-            fileInpuStream = new FileInputStream(fileLocation.toString() + "/" + fileName);
+            fileInpuStream = new FileInputStream(getCVLocation(fileName));
             XWPFDocument document = new XWPFDocument(fileInpuStream);
             List<XWPFParagraph> paragraphs = document.getParagraphs();
             for (XWPFParagraph paragraph : paragraphs) {
@@ -65,13 +66,31 @@ public class CvFileUtilsService {
         }
         return documentText;
     }
-    
-    public Map<String, Integer> getNumberOfFindsForPatterns(Set<String> patterns, String documentText){
+
+    public Map<String, Integer> getNumberOfFindsForPatterns(Set<String> patterns, String documentText) {
         Map<String, Integer> numberOfFindsPerPattern = new HashMap<>();
         for (String pattern : patterns) {
             BoyerMoore boyerMoore = new BoyerMoore(pattern.toLowerCase());
-            numberOfFindsPerPattern.put(pattern.toLowerCase(),boyerMoore.search(documentText));
+            numberOfFindsPerPattern.put(pattern.toLowerCase(), boyerMoore.search(documentText));
         }
         return numberOfFindsPerPattern;
+    }
+
+    public double calculateCVPoints(Map<String, Integer> numberOfFindsPerPattern) {
+        double totalCVPoints = 0;
+        double totalPoints = 0;
+        for (Map.Entry<String, Integer> entry : numberOfFindsPerPattern.entrySet()) {
+            if (entry.getValue() > MAXIMUM_POINTS_PER_PATTERN) {
+                totalPoints += MAXIMUM_POINTS_PER_PATTERN;
+            } else {
+                totalPoints += entry.getValue();
+            }
+        }
+        totalCVPoints = totalPoints / numberOfFindsPerPattern.size();
+        return totalCVPoints;
+    }
+    
+    public String getCVLocation (String fileName) {
+        return fileLocation.toString() + "/" + fileName;
     }
 }

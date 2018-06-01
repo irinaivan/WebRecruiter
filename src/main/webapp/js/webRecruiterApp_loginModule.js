@@ -14,6 +14,7 @@ webRecruiterApp.controller("loginController", function ($scope, httpLoginRequest
                         document.getElementById("errorLabel_login").innerHTML = '';
                         $window.sessionStorage["token"] = response.data.token;
                         $window.sessionStorage["authenticatedUserRole"] = response.data.userRole;
+                        $window.sessionStorage["userName"] = response.data.userName;
                         switch (response.data.userRole) {
                             case "admin":
                                 $state.go("admin");

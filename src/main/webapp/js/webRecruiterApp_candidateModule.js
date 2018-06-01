@@ -1,6 +1,7 @@
 var candidateSelectedJob = {};
+var testResponse = {};
 
-webRecruiterApp.controller("chooseTestController", function (tokenRequestsService, $scope, $state) {
+webRecruiterApp.controller("chooseTestController", function (tokenRequestsService, $scope, $state, $window) {
     var jobsComboInfoUrl = "commonModule/jobsForCombo";
     tokenRequestsService.getRequest(jobsComboInfoUrl).then(
             function (response) {
@@ -22,7 +23,7 @@ webRecruiterApp.controller("chooseTestController", function (tokenRequestsServic
         angular.copy($scope.selectedJob, candidateSelectedJob);
         var checkTestAlreadyTakenUrl = "candidateModule/checkTestAlreadyTaken";
         var checkData = {
-            "userName": "iivan",
+            "userName": $window.sessionStorage["userName"],
             "candidateSelectedJob": candidateSelectedJob.jobInfo
         };
         tokenRequestsService.postRequest(checkTestAlreadyTakenUrl, checkData).then(
@@ -37,7 +38,7 @@ webRecruiterApp.controller("chooseTestController", function (tokenRequestsServic
     };
 });
 
-webRecruiterApp.controller("takeTestController", function (tokenRequestsService, convertQuestionInfo, $scope) {
+webRecruiterApp.controller("takeTestController", function (tokenRequestsService, convertQuestionInfo, $scope, $state, $window) {
     if (candidateSelectedJob.jobInfo !== undefined) {
         var questionsUrl = "candidateModule/candidateJobQuestions";
         var parametersList = {
@@ -49,7 +50,7 @@ webRecruiterApp.controller("takeTestController", function (tokenRequestsService,
                     $scope.jobQuestions = convertedServerData;
                 },
                 function (error) {
-                    //do nothing
+                    $state.go("candidate.tabs.chooseTest");
                 }
         );
     }
@@ -64,7 +65,7 @@ webRecruiterApp.controller("takeTestController", function (tokenRequestsService,
     $scope.submitTestAnswers = function () {
         var url = "candidateModule/candidateAnswers";
         var testData = {
-            "candidate": "iivan",
+            "candidate": $window.sessionStorage["userName"],
             "candidateSelectedJob": candidateSelectedJob.jobInfo,
             "question1Answer": $scope.responseQuestion1,
             "question2Answer": $scope.responseQuestion2,
@@ -74,37 +75,61 @@ webRecruiterApp.controller("takeTestController", function (tokenRequestsService,
         };
         tokenRequestsService.postRequest(url, testData).then(
                 function (response) {
-                    console.log("OK");
+                    testResponse = response.data;
+                    $state.go("candidate.uploadCV");
                 },
                 function (error) {
-                    console.log("Error");
+                    $state.go("candidate.tabs.chooseTest");
                 }
         );
     };
 });
 
 webRecruiterApp.controller("uploadCVController", function ($http, $scope, $state, $window) {
+    if (testResponse.passed === "true") {
+        document.getElementById("successLabel_uploadCV").innerHTML = '<i class="fa fa-check"></i>' + testResponse.message;
+    } else {
+        if (testResponse.passed === "false") {
+            document.getElementById("errorLabel_uploadCV").innerHTML = '<i class="fa fa-exclamation-triangle"></i>' + testResponse.message;
+        }
+    }
+    $scope.checkTestPoints = function () {
+        if (testResponse.passed === "true") {
+            $("#cvFile").addClass('inputfile_design');
+            return false;
+        } else {
+            $("#cvFile").addClass('inputfile_disabled');
+            return true;
+        }
+    };
     $scope.uploadFile = function (files) {
-        debugger;
         var formData = new FormData();
         var file = files[0];
         var fileName = files[0].name;
         var fileUrl = "candidateModule/uploadCV";
         $("#label_span").text(fileName);
+        $("#processingCV").show();
         formData.append("cv", file);
-        formData.append("userName", "iivan");
-        //formData.append("candidateSelectedJob", candidateSelectedJob.jobInfo);
-        formData.append("candidateSelectedJob", "Java Developer-Indigo Pro");
+        formData.append("userName", $window.sessionStorage["userName"]);
+        formData.append("candidateSelectedJob", candidateSelectedJob.jobInfo);
         $http.post(fileUrl, formData, {
             withCredentials: true,
             headers: {'Content-Type': undefined, 'Authorization': 'Bearer ' + $window.sessionStorage["token"]},
             transformRequest: angular.identity
         }).then(
                 function (response) {
-                    console.log("OK");
+                    $("#processingCV").hide();
+                    $("#cvFile").prop('disabled', true);
+                    $("#cvFileLabel").addClass("upload_CV");
+                    document.getElementById("errorLabel_uploadCV").innerHTML = "";
+                    document.getElementById("successLabel_uploadCV").innerHTML = '<i class="fa fa-check"></i>' + response.data.message;
                 },
                 function (error) {
-                    console.log("Error");
+                    $("#processingCV").hide();
+                    $("#cvFile").prop('disabled', true);
+                    $("#cvFileLabel").addClass("upload_CV");
+                    document.getElementById("successLabel_uploadCV").innerHTML = "";
+                    document.getElementById("errorLabel_uploadCV").innerHTML = '<i class="fa fa-exclamation-triangle"></i>' + error.data.message;
                 }
         );
     };

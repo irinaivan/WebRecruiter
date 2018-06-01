@@ -80,9 +80,15 @@ public class CandidateResource {
 
     @Value("${success.testCanBeTaken}")
     private String testCanBeTaken;
-    
+
     @Value("${error.cvInappropiate")
     private String cvInappropiate;
+
+    @Value("${succes.cvPointsMessage}")
+    private String cvPointsMessage;
+
+    @Value("${error.candidateInexistent}")
+    private String candidateInexistent;
 
     @RequestMapping(value = "/checkTestAlreadyTaken", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> checkIfTestWasTakenByUser(@RequestBody final Map<String, String> candidateInfo) {
@@ -139,8 +145,10 @@ public class CandidateResource {
             int minGrade = jobQuestions.size() / 2;
             if (testGrade > minGrade) {
                 responseBody.put("message", String.format("%s: %s. %s", testPointsMessage, testGrade, uploadCV));
+                responseBody.put("passed", "true");
             } else {
                 responseBody.put("message", underMinPoints);
+                responseBody.put("passed", "false");
             }
             candidatesRepository.updateCandidateTestPoints(existingCandidate, testGrade);
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -153,17 +161,27 @@ public class CandidateResource {
     @RequestMapping(value = "/uploadCV", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> uploadCVAndCalculatePoints(@RequestParam("cv") MultipartFile file, @RequestParam("userName") String userName, @RequestParam("candidateSelectedJob") String jobNameAndProject) {
         Map<String, String> responseBody = new HashMap<>();
-        String fileName = fileStorageService.storeFile(file);
+        String fileName = fileStorageService.storeFile(file, userName, jobNameAndProject);
         String cvText = cvFileService.getCVText(fileName);
         if (cvText != "") {
             String[] jobInfo = jobNameAndProject.split("-");
             Job existingJob = jobsRepository.findOneByJobNameAndJobProject(jobInfo[0], jobInfo[1]);
             if (existingJob != null) {
+                User user = new User(userName);
+                user.setId(userName);
+                User existingUser = usersRepository.findOneById(user.getId());
+                Candidate existingCandidate = candidatesRepository.findOneByUserNameAndJobNameAndJobProject(existingUser.getUserName(), existingJob.getJobName(), existingJob.getJobProject());
                 String jobRequirements = existingJob.getJobRequirements();
-                String[] requirements = jobRequirements.split(", ");
-                SortedSet<String> patterns = new TreeSet<String>( Arrays.asList(requirements));
-                Map <String, Integer> numberOfFindsPerPattern = cvFileService.getNumberOfFindsForPatterns(patterns, cvText);
-                responseBody.put("message", "aaa");
+                String[] requirements = jobRequirements.split(",");
+                for (int i = 0; i < requirements.length; i++) {
+                    requirements[i] = requirements[i].trim();
+                }
+                SortedSet<String> patterns = new TreeSet<String>(Arrays.asList(requirements));
+                Map<String, Integer> numberOfFindsPerPattern = cvFileService.getNumberOfFindsForPatterns(patterns, cvText);
+                double cvPoints = cvFileService.calculateCVPoints(numberOfFindsPerPattern);
+                cvPoints = Math.floor(cvPoints * 100) / 100;
+                candidatesRepository.updateCandidateCVPathAndPoints(existingCandidate, cvPoints, cvFileService.getCVLocation(fileName));
+                responseBody.put("message", String.format(cvPointsMessage, cvPoints));
                 return new ResponseEntity<>(responseBody, HttpStatus.OK);
             } else {
                 responseBody.put("message", jobNotInDb);

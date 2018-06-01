@@ -25,7 +25,7 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
     private String httpHeaderStartingConvention;
     
     public JwtAuthenticationTokenFilter() {
-        super("/rest/**");
+        super("/**Module/**");
     }
 
     @Override
