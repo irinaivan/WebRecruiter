@@ -73,4 +73,17 @@ public class CandidatesRepositoryImpl implements CandidatesRepositoryCustom {
         return candidatesPerJob;
     }
 
+    @Override
+    public List<Candidate> getAllCandidatesToDelete(String jobName, String jobProject) {
+        List<Candidate> candidates = new ArrayList();
+        Query query = new Query(
+                new Criteria().andOperator(
+                        Criteria.where("jobName").is(jobName),
+                        Criteria.where("jobProject").is(jobProject)
+                )
+        );
+        candidates = mongoTemplate.find(query, Candidate.class);
+        return candidates;
+    }
+
 }

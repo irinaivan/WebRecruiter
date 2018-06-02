@@ -49,36 +49,36 @@ import org.springframework.web.bind.annotation.RestController;
 @PropertySource("classpath:http_messages.properties")
 @RequestMapping("/adminModule")
 public class AdminResource {
-
+    
     @Autowired
     JobsRepository jobsRepository;
-
+    
     @Autowired
     CandidatesRepository candidatesRepository;
-
+    
     @Value("${error.jobExistsInDb}")
     private String jobExistsInDb;
-
+    
     @Value("${success.jobCreated}")
     private String jobCreated;
-
+    
     @Value("${error.jobNotInDb}")
     private String jobNotInDb;
-
+    
     @Value("${success.jobDeleted}")
     private String jobDeleted;
-
+    
     @Value("${error.unableToUpdateJob}")
     private String unableToUpdateJob;
-
+    
     @Value("${success.jobUpdated}")
     private String jobUpdated;
-
+    
     @Value("${error.jobNameOrProjectIncorrect}")
     private String jobNameOrProjectIncorrect;
-
+    
     private Job jobToUpdate = new Job();
-
+    
     @RequestMapping(value = "/createJob", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> createJob(@RequestBody final Map<String, String> jobData) throws ServletException {
         Map<String, String> responseBody = new HashMap<>();
@@ -104,7 +104,7 @@ public class AdminResource {
             return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @RequestMapping(value = "/deleteJob", method = RequestMethod.GET)
     public ResponseEntity<Map<String, String>> deleteJob(@RequestParam("jobInfo") String jobNameAndProject) {
         Map<String, String> responseBody = new HashMap<>();
@@ -115,11 +115,15 @@ public class AdminResource {
             return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             jobsRepository.delete(existingJob);
+            List<Candidate> candidatesToDelete = candidatesRepository.getAllCandidatesToDelete(jobInfo[0], jobInfo[1]);
+            for (Candidate candidate : candidatesToDelete) {
+                candidatesRepository.delete(candidate);
+            }
             responseBody.put("message", jobDeleted);
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }
     }
-
+    
     @RequestMapping(value = "/allJobInfo", method = RequestMethod.GET)
     @ResponseBody
     public Job getJobAllInfo(@RequestParam("jobInfo") String jobNameAndProject) {
@@ -127,7 +131,7 @@ public class AdminResource {
         jobToUpdate = jobsRepository.getJobAllInfo(jobInfo[0], jobInfo[1]);
         return jobToUpdate;
     }
-
+    
     @RequestMapping(value = "/updateJob", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, String>> updateJob(@RequestBody final Map<String, String> jobData) {
@@ -153,7 +157,7 @@ public class AdminResource {
             return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @RequestMapping(value = "/jobCandidates", method = RequestMethod.GET)
     @ResponseBody
     public List<Candidate> getCandidatesPerJob(@RequestParam("jobInfo") String jobNameAndProject) {
@@ -164,21 +168,21 @@ public class AdminResource {
         candidatesPerJob = candidatesRepository.getAllCandidatesPerJob(jobInfo[0], jobInfo[1], minTestPoints);
         return candidatesPerJob;
     }
-
+    
     @RequestMapping(value = "/downloadCV", method = RequestMethod.GET)
     public ResponseEntity<ByteArrayResource> downloadCV(@RequestParam("cvPath") String cvPath) throws IOException {
-    Path filePath = Paths.get(cvPath)
+        Path filePath = Paths.get(cvPath)
                 .toAbsolutePath().normalize();
-    String fileName = cvPath.substring(cvPath.lastIndexOf("/")+1);
-    byte[] data = Files.readAllBytes(filePath);
-    ByteArrayResource resource = new ByteArrayResource(data);
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.add(HttpHeaders.CONTENT_DISPOSITION, fileName);
-    return ResponseEntity.ok()
-            .headers(headers)
-            .contentLength(data.length)
-            .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
-            .body(resource);
+        String fileName = cvPath.substring(cvPath.lastIndexOf("/") + 1);
+        byte[] data = Files.readAllBytes(filePath);
+        ByteArrayResource resource = new ByteArrayResource(data);
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, fileName);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(data.length)
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                .body(resource);
     }
 }

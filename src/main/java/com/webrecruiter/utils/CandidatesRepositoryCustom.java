@@ -13,9 +13,12 @@ import java.util.List;
  * @author irina
  */
 public interface CandidatesRepositoryCustom {
+
     public void updateCandidateTestPoints(Candidate candidateToUpdate, int testPoints);
-    
+
     public void updateCandidateCVPathAndPoints(Candidate candidateToUpdate, double cvPoints, String cvPath);
-    
-    public List<Candidate> getAllCandidatesPerJob (String jobName, String jobProject, int testMinPoints);
+
+    public List<Candidate> getAllCandidatesPerJob(String jobName, String jobProject, int testMinPoints);
+
+    public List<Candidate> getAllCandidatesToDelete(String jobName, String jobProject);
 }

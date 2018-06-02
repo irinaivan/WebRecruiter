@@ -164,7 +164,6 @@ webRecruiterApp.controller("candidatesController", function (tokenRequestsServic
         );
     };
     $scope.downloadCV = function (cvPath) {
-        //$window.open("adminModule/downloadCV?cvPath="+cvPath, '_blank','');
         $http({
             method: 'GET',
             url: 'adminModule/downloadCV',
