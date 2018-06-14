@@ -105,7 +105,7 @@ public class AdminResource {
         }
     }
     
-    @RequestMapping(value = "/deleteJob", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteJob", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String, String>> deleteJob(@RequestParam("jobInfo") String jobNameAndProject) {
         Map<String, String> responseBody = new HashMap<>();
         String[] jobInfo = jobNameAndProject.split("-");

@@ -75,7 +75,7 @@ webRecruiterApp.controller("modifyOrDeleteJobController", function (tokenRequest
         var parametersList = {
             "jobInfo": $scope.selectedJob.jobInfo
         };
-        tokenRequestsService.getRequestWithParams(deleteJobUrl, parametersList).then(
+        tokenRequestsService.deteleRequest(deleteJobUrl, parametersList).then(
                 function (response) {
                     document.getElementById("errorLabel_modifyJob").innerHTML = '';
                     $state.reload();

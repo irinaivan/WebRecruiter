@@ -27,6 +27,14 @@ webRecruiterApp.service('tokenRequestsService', function ($http, $window) {
                 method: "GET",
                 params: parameters
             });
+        },
+        deteleRequest: function (url, parameters) {
+            $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage["token"];
+            return $http({
+                url: url,
+                method: "DELETE",
+                params: parameters
+            });
         }
     };
 
